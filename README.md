@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This project is a personal journey into modern web development, focusing on building a responsive and interactive website with a powerful tech stack. This README outlines the project's core technologies and design inspiration.
+
+---
+
+### ✨ Key Features & Technologies
+
+- **Next.js**: A powerful React framework used for building a full-stack application, leveraging features like server-side rendering (SSR) and static site generation (SSG) for optimal performance.
+
+- **Tailwind CSS**: A utility-first CSS framework that allows for rapid UI development and ensures a consistent, responsive design across all screen sizes.
+
+- **Framer Motion**: A production-ready animation library that brings the user interface to life with smooth, interactive animations and transitions.
+
+---
+
+### 🎨 Design & Inspiration
+
+The design of this project is an adaptation of the "SaaS Website UI Kit — Framer Website Kit." This UI kit provides a sleek and modern foundation for the website's visual aesthetic.
+
+- Original Figma Design: https://ui8.net/ui8/products/brainwave-ai-landing-page-kit
 
 ## Getting Started
 

@@ -44,7 +44,7 @@ const SELECTED_TESTIMONIALS_INDEX = 0;
 
 export const Testimonials = () => {
   return (
-    <section>
+    <section id="testimonials">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionBorder borderTop>
           <SectionContent>

@@ -42,7 +42,12 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   return (
     <Fragment>
-      <header className="border-b border-red-200/20 z-50">
+      <header
+        className={twMerge(
+          "border-b border-red-200/20 z-50",
+          isMenuOpen && "sticky top-0 bg-gray-950/90 backdrop-blur-lg"
+        )}
+      >
         <div className="container mx-auto px-4 lg:px-20">
           <div className="h-18 lg:h-20 flex items-center justify-between">
             <div className="flex gap-4 items-center">
@@ -60,6 +65,15 @@ export const Header = () => {
                   before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-px before:h-2 before:bg-gray-200/20
                   last:after:content-[''] last:after:absolute last:after:bottom-0 last:after:right-0 last:after:w-px last:after:h-2 last:after:bg-gray-200/20
                   "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Smooth scroll to section
+                      const element = document.querySelector(item.href);
+                      if (element) {
+                        setIsMenuOpen(false);
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
                   >
                     {item.name}
                   </a>
@@ -108,7 +122,7 @@ export const Header = () => {
 
       <div
         className={twMerge(
-          "fixed top-19 left-0 right-0 bottom-0 z-30 overflow-hidden transform transition-all duration-300 ease-in-out bg-gray-950/90 backdrop-blur-lg",
+          "fixed top-18 left-0 right-0 bottom-0 z-30 overflow-hidden transform transition-all duration-300 ease-in-out bg-gray-950/90 backdrop-blur-lg",
           isMenuOpen
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-2 pointer-events-none"
@@ -127,8 +141,16 @@ export const Header = () => {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={() => setIsMenuOpen(false)}
                 className="h-10 text-sm text-gray-400 font-bold uppercase tracking-widest"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Smooth scroll to section
+                  const element = document.querySelector(item.href);
+                  if (element) {
+                    setIsMenuOpen(false);
+                    element.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
               >
                 {item.name}
               </a>

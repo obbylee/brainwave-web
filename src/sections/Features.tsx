@@ -1,3 +1,5 @@
+"use client";
+
 import slackLogo from "@/assets/images/slack-logo.png";
 import dockerLogo from "@/assets/images/docker-logo.png";
 import figmaLogo from "@/assets/images/figma-logo.png";
@@ -14,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import Logo from "@/components/Logo";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 export const features = [
   "Effortless integration",
@@ -66,7 +69,7 @@ export const logos = [
 
 export const Features = () => {
   return (
-    <section>
+    <section id="features">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionBorder borderTop>
           <SectionContent className="md:px-20 lg:px-40">
@@ -104,22 +107,80 @@ export const Features = () => {
                   </div>
 
                   {logos.map(({ src, alt, rotate }) => (
-                    <div
+                    <motion.div
                       key={alt}
                       className="absolute inset-0"
-                      style={{ transform: `rotate(${rotate}deg)` }}
+                      // style={{ transform: `rotate(${rotate}deg)` }}
+                      initial={{ rotate: rotate }}
+                      animate={{
+                        rotate: [
+                          rotate,
+                          rotate + 45,
+                          rotate + 45,
+                          rotate + 90,
+                          rotate + 90,
+                          rotate + 135,
+                          rotate + 135,
+                          rotate + 180,
+                          rotate + 180,
+                          rotate + 225,
+                          rotate + 225,
+                          rotate + 270,
+                          rotate + 270,
+                          rotate + 315,
+                          rotate + 315,
+                          rotate + 360,
+                          rotate + 360,
+                        ],
+                      }}
+                      transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     >
-                      <div
+                      <motion.div
                         className="size-10 md:size-14 inline-flex items-center justify-center bg-gray-950 border border-gray-200/20 rounded-lg absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                        style={{ transform: `rotate(-${rotate}deg)` }}
+                        // style={{
+                        //   transform: `rotate(-${rotate}deg)`,
+                        // }}
+                        initial={{
+                          rotate: -rotate,
+                        }}
+                        animate={{
+                          rotate: [
+                            -rotate,
+                            -rotate - 45,
+                            -rotate - 45,
+                            -rotate - 90,
+                            -rotate - 90,
+                            -rotate - 135,
+                            -rotate - 135,
+                            -rotate - 180,
+                            -rotate - 180,
+                            -rotate - 225,
+                            -rotate - 225,
+                            -rotate - 270,
+                            -rotate - 270,
+                            -rotate - 315,
+                            -rotate - 315,
+                            -rotate - 360,
+                            -rotate - 360,
+                          ],
+                        }}
+                        transition={{
+                          duration: 10,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
                       >
                         <Image
                           src={src}
                           alt={alt}
                           className="size-6 md:size-9"
                         />
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   ))}
                 </div>
               </div>

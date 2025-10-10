@@ -1,5 +1,8 @@
+"use client";
+
 import { cva } from "class-variance-authority";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useState } from "react";
+import { motion } from "motion/react";
 
 const button = cva(
   "text-xs tracking-widest uppercase font-bold h-10 px-6 rounded-lg",
@@ -31,9 +34,14 @@ export default function Button({
   className = "",
   ...props
 }: ButtonProps) {
+  const [isHover, setIsHover] = useState(false);
   return (
-    <button className={button({ block, variant, className })}>
+    <motion.button
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      className={button({ block, variant, className })}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }

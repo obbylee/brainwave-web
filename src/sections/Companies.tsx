@@ -1,11 +1,14 @@
-import AcmeCorpLogo from "../assets/images/acme-corp-logo.svg";
-import EchoValleyLogo from "../assets/images/echo-valley-logo.svg";
-import QuantumLogo from "../assets/images/quantum-logo.svg";
-import PulseLogo from "../assets/images/pulse-logo.svg";
-import OutsideLogo from "../assets/images/outside-logo.svg";
-import CelestialLogo from "../assets/images/celestial-logo.svg";
+"use client";
+
+import AcmeCorpLogo from "@/assets/images/acme-corp-logo.svg";
+import EchoValleyLogo from "@/assets/images/echo-valley-logo.svg";
+import QuantumLogo from "@/assets/images/quantum-logo.svg";
+import PulseLogo from "@/assets/images/pulse-logo.svg";
+import OutsideLogo from "@/assets/images/outside-logo.svg";
+import CelestialLogo from "@/assets/images/celestial-logo.svg";
 import SectionBorder from "@/components/SectionBorder";
 import SectionContent from "@/components/SectionContent";
+import { motion } from "motion/react";
 
 export const companies = [
   {
@@ -45,13 +48,18 @@ export const Companies = () => {
             </h2>
 
             <div className="flex mt-20 overflow-x-clip -mx-4 lg:-mx-8">
-              <div className="flex flex-none gap-18 px-18">
-                {companies.map(({ name, logo: Logo }) => (
-                  <div key={name}>
+              <motion.div
+                // style={{ x: "-50%" }}
+                animate={{ x: [0, "-50%"] }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="flex flex-none gap-18 md:gap-36 px-9 md:px-18"
+              >
+                {[...companies, ...companies].map(({ logo: Logo }, i) => (
+                  <div key={i}>
                     <Logo className="h-8" />
                   </div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </SectionContent>
         </SectionBorder>

@@ -1,13 +1,16 @@
+"use client";
+
 import AshwinSantiago from "@/assets/images/ashwin-santiago.jpg";
 import AlecWhitten from "@/assets/images/alec-whitten.jpg";
 import ReneWells from "@/assets/images/rene-wells.jpg";
 import MollieHall from "@/assets/images/mollie-hall.jpg";
 import SectionBorder from "@/components/SectionBorder";
 import SectionContent from "@/components/SectionContent";
-import { Fragment } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 
 export const testimonials = [
   {
@@ -40,64 +43,82 @@ export const testimonials = [
   },
 ];
 
-const SELECTED_TESTIMONIALS_INDEX = 0;
-
 export const Testimonials = () => {
+  const [currentIndex, setIndex] = useState(0);
   return (
     <section id="testimonials">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionBorder borderTop>
           <SectionContent>
-            <div className="border-gradient rounded-3xl px-6 md:px-10 lg:px-16 py-16 lg:py-24 relative flex flex-col md:flex-row items-center gap-12 md:mx-10 lg:mx-20">
-              <div className="absolute top-0 left-6 md:left-10 lg:left-16 -translate-y-1/2">
-                <FontAwesomeIcon
-                  icon={faQuoteLeft}
-                  className="text-violet-400"
-                  style={{ fontSize: "5rem" }} // fallback
-                />
-              </div>
+            <LayoutGroup>
+              <motion.div
+                layout
+                className="border-gradient rounded-3xl px-6 md:px-10 lg:px-16 py-16 lg:py-24 relative flex flex-col md:flex-row gap-12 md:mx-10 lg:mx-20"
+              >
+                <div className="absolute top-0 left-6 md:left-10 lg:left-16 -translate-y-1/2">
+                  <FontAwesomeIcon
+                    icon={faQuoteLeft}
+                    className="text-violet-400"
+                    style={{ fontSize: "5rem" }} // fallback
+                  />
+                </div>
 
-              {testimonials.map((testimonial, index) => (
-                <Fragment key={index}>
-                  {index === SELECTED_TESTIMONIALS_INDEX && (
-                    <blockquote
-                      key={index}
-                      className="flex flex-col lg:flex-row gap-12"
-                    >
-                      <p className="text-xl md:text-2xl font-medium">
-                        {testimonial.quote}
-                      </p>
+                <AnimatePresence mode="wait" initial={false}>
+                  {testimonials.map((testimonial, index) =>
+                    index === currentIndex ? (
+                      <motion.blockquote
+                        key={index}
+                        className="flex flex-col lg:flex-row gap-12"
+                        layout
+                        initial={{ opacity: 0, y: 25 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 25 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <p className="text-xl md:text-2xl font-medium">
+                          {testimonial.quote}
+                        </p>
 
-                      <cite className="not-italic lg:text-right">
-                        <Image
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          className="rounded-xl size-28 max-w-none"
-                        />
-                        <div className="font-bold mt-4">{testimonial.name}</div>
-                        <div className="text-xs text-gray-400 mt-2">
-                          {testimonial.title}
-                        </div>
-                      </cite>
-                    </blockquote>
+                        <cite className="not-italic lg:text-right">
+                          <Image
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            className="rounded-xl size-28 max-w-none"
+                          />
+                          <div className="font-bold mt-4">
+                            {testimonial.name}
+                          </div>
+                          <div className="text-xs text-gray-400 mt-2">
+                            {testimonial.title}
+                          </div>
+                        </cite>
+                      </motion.blockquote>
+                    ) : null
                   )}
-                </Fragment>
-              ))}
+                </AnimatePresence>
 
-              <div className="flex md:flex-col gap-2 justify-center">
-                {testimonials.map((_, index) => (
-                  <div
-                    key={index}
-                    className="size-6 relative isolate inline-flex items-center justify-center cursor-pointer"
-                  >
-                    {SELECTED_TESTIMONIALS_INDEX === index && (
-                      <div className="absolute size-full border-gradient rounded-full -z-10"></div>
-                    )}
-                    <div className="size-1.5 bg-gray-200 rounded-full"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
+                <motion.div
+                  layout="position"
+                  className="flex md:flex-col gap-2"
+                >
+                  {testimonials.map((_, index) => (
+                    <div
+                      key={index}
+                      className="size-6 relative isolate inline-flex items-center justify-center cursor-pointer"
+                      onClick={() => setIndex(index)}
+                    >
+                      {currentIndex === index && (
+                        <motion.div
+                          layoutId="dot"
+                          className="absolute size-full border-gradient rounded-full -z-10"
+                        ></motion.div>
+                      )}
+                      <div className="size-1.5 bg-gray-200 rounded-full"></div>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </LayoutGroup>
           </SectionContent>
         </SectionBorder>
       </div>

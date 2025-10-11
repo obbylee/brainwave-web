@@ -21,7 +21,6 @@ export default function Planet({
   size,
   color,
   className,
-  ...props
 }: HTMLAttributes<HTMLDivElement> & {
   size?: "sm" | "md" | "lg";
   color?: "violet" | "teal" | "fuchsia";

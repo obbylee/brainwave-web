@@ -8,50 +8,12 @@ import Orbit from "@/components/Orbit";
 import Planet from "@/components/Planet";
 import SectionBorder from "@/components/SectionBorder";
 import SectionContent from "@/components/SectionContent";
-import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import { useEffect, useRef, useState } from "react";
-
-const useMousePositin = () => {
-  const [innerWidth, setInnerWidth] = useState(1);
-  const [innerHeight, setInnerHeight] = useState(1);
-  const clientX = useMotionValue(0);
-  const clientY = useMotionValue(0);
-
-  const xProgress = useTransform(clientX, [0, innerWidth], [0, 1]);
-  const yProgress = useTransform(clientY, [0, innerHeight], [0, 1]);
-
-  useEffect(() => {
-    setInnerWidth(window.innerWidth);
-    setInnerHeight(window.innerHeight);
-
-    window.addEventListener("resize", () => {
-      setInnerWidth(window.innerWidth);
-      setInnerHeight(window.innerHeight);
-    });
-
-    return () => {
-      window.removeEventListener("resize", () => {});
-    };
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("mousemove", (e) => {
-      clientX.set(e.clientX);
-      clientY.set(e.clientY);
-    });
-  }, []);
-
-  return { xProgress, yProgress };
-};
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { useRef } from "react";
+import { useMousePosition } from "@/hooks/useMousePosition";
 
 export const Hero = () => {
-  const { xProgress, yProgress } = useMousePositin();
+  const { xProgress, yProgress } = useMousePosition();
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -104,6 +66,10 @@ export const Hero = () => {
                       maskSize: "contain",
                       maskPosition: "center",
                       maskRepeat: "no-repeat",
+                      WebkitMaskImage: "url(/underline.svg)",
+                      WebkitMaskSize: "contain",
+                      WebkitMaskPosition: "center",
+                      WebkitMaskRepeat: "no-repeat",
                     }}
                   ></span>
                 </span>

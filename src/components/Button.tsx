@@ -1,8 +1,9 @@
 "use client";
 
 import { cva } from "class-variance-authority";
-import { HTMLAttributes, useState } from "react";
-import { motion } from "motion/react";
+import { HTMLAttributes, useEffect, useState } from "react";
+import { motion, useMotionValue, useMotionTemplate } from "motion/react";
+import { animate } from "motion";
 
 const button = cva(
   "text-xs tracking-widest uppercase font-bold h-10 px-6 rounded-lg",
@@ -28,18 +29,36 @@ type ButtonProps = {
 } & HTMLAttributes<HTMLButtonElement>;
 
 export default function Button({
-  variant,
+  variant = "primary",
   block = false,
   children,
   className = "",
-  ...props
 }: ButtonProps) {
   const [isHover, setIsHover] = useState(false);
+
+  const rotate = useMotionValue(45);
+  const background = useMotionTemplate`linear-gradient(var(--color-gray-950),var(--color-gray-950)) padding-box, conic-gradient(from ${rotate}deg,var(--color-violet-400),var(--color-fuchsia-400),var(--color-amber-300),var(--color-teal-300),var(--color-violet-400)) border-box`;
+
+  useEffect(() => {
+    if (isHover) {
+      animate(rotate, rotate.get() + 360, {
+        duration: 1,
+        ease: "linear",
+        repeat: Infinity,
+      });
+    } else {
+      animate(rotate, 45, {
+        duration: 0.5,
+      });
+    }
+  }, [isHover, rotate]);
+
   return (
     <motion.button
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       className={button({ block, variant, className })}
+      style={variant === "primary" ? { background: background } : undefined}
     >
       {children}
     </motion.button>
